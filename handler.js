@@ -23,6 +23,10 @@ module.exports.getToken = (event, context, callback) => {
     .then((res) => {
       const response = {
         statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin" : "*", 
+          "Access-Control-Allow-Credentials" : true,
+        },
         body: JSON.stringify(res),
       };
       callback(null, response);
