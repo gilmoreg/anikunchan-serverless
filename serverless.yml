@@ -55,14 +55,14 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  getToken:
+    handler: handler.getToken
     environment:
       ANILIST_CLIENT_ID: ${file(env.yml):ANILIST_CLIENT_ID}
       ANILIST_CLIENT_SECRET: ${file(env.yml):ANILIST_CLIENT_SECRET}
     events:
       - http:
-          path: hello
+          path: token
           method: get
 
 #    The following are a few example events you can configure
