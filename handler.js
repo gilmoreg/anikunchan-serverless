@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports.hello = (event, context, callback) => {
+  const aniListEndpoint = 'https://anilist.co/api/';
   const response = {
     statusCode: 200,
     body: JSON.stringify({
