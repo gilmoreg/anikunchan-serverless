@@ -1,4 +1,4 @@
-service: anikunchan-token
+service: anikunchan-serverless
 
 provider:
   name: aws
@@ -6,7 +6,7 @@ provider:
 
 functions:
   getToken:
-    handler: handler.getToken
+    handler: handlers/ani-handler.getToken
     environment:
       ANILIST_CLIENT_ID: ${file(env.yml):ANILIST_CLIENT_ID}
       ANILIST_CLIENT_SECRET: ${file(env.yml):ANILIST_CLIENT_SECRET}
@@ -15,3 +15,34 @@ functions:
           path: token
           method: get
           cors: true
+  googleImageSearch:
+    handler: handlers/gi-handler.googleImageSearch
+    environment:
+      GOOGLE_CSE_KEY: ${file(env.yml):GOOGLE_CSE_KEY}
+      GOOGLE_CSE_CX: ${file(env.yml):GOOGLE_CSE_CX} 
+    events:
+      - http:
+          path: image
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            parameters:
+              querystrings:
+                q: true
+                start: true
+  youtubeSearch:
+    handler: handlers/yt-handler.youtubeSearch
+    environment:
+      YOUTUBE_KEY: ${file(env.yml):YOUTUBE_KEY}
+    events:
+      - http:
+          path: video
+          method: get
+          cors: true
+          integration: lambda
+          request:
+            parameters:
+              querystrings:
+                q: true
+                pageToken: false
